@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tracalorie | Meal & Calorie Tracker</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f4f6f9;
+    color: #1f2937;
+  }
+  nav {
+    background: #1565c0;
+    color: white;
+  }
+  .nav-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand-logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .clear-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .clear-btn:hover { background: rgba(255,255,255,0.32); }
+
+  .container {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 20px 60px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .alert {
+    display: none;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: medium;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  .alert-success {
+    display: block;
+    color: #004085;
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+  }
+  .alert-danger {
+    display: block;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+  }
+  .input-field {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .input-field label {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 600;
+  }
+  .input-field input {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  .input-field input:focus {
+    outline: none;
+    border-color: #1565c0;
+  }
+
+  .btn {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .add-btn { background: #1565c0; }
+  .add-btn:hover { background: #0d47a1; }
+  .update-btn { background: #ef6c00; display: none; }
+  .update-btn:hover { background: #e65100; }
+  .delete-btn { background: #d32f2f; display: none; }
+  .delete-btn:hover { background: #b71c1c; }
+  .back-btn { background: #757575; display: none; margin-left: auto; }
+  .back-btn:hover { background: #616161; }
+
+  h3.center-align {
+    text-align: center;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+  }
+  .total-calories {
+    color: #1565c0;
+    font-weight: 800;
+  }
+
+  #item-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+  }
+  .collection-item {
+    background: white;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .collection-item strong {
+    font-weight: 700;
+  }
+  .collection-item em {
+    color: #6b7280;
+    font-style: normal;
+    margin-left: 4px;
+  }
+  .edit-item {
+    cursor: pointer;
+    color: #1565c0;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 4px 8px;
+  }
+  .edit-item:hover { color: #0d47a1; }
+</style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">🔥 Tracalorie</a>
+      <a href="#" class="clear-btn">Clear All</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Form Card -->
+    <div class="card">
+      <div class="alert"></div>
+      <span class="card-title">Add Meal / Food Item</span>
+      <form class="col" id="item-form">
+        <div class="row">
+          <div class="input-field">
+            <label for="item-name">Meal</label>
+            <input type="text" placeholder="Add Item" id="item-name">
+          </div>
+          <div class="input-field">
+            <label for="item-calories">Calories</label>
+            <input type="number" placeholder="Add Calories" id="item-calories">
+          </div>
+        </div>
+        <div class="row" style="margin-top:16px;">
+          <button type="submit" class="add-btn btn">+ Add Meal</button>
+          <button type="button" class="update-btn btn">✎ Update Meal</button>
+          <button type="button" class="delete-btn btn">✕ Delete Meal</button>
+          <button type="button" class="back-btn btn">← Back</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Calorie Count -->
+    <h3 class="center-align">Total Calories: <span class="total-calories">0</span></h3>
+
+    <!-- Item List -->
+    <ul id="item-list"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
